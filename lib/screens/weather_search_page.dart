@@ -3,6 +3,7 @@ import '../models/weather.dart';
 import '../services/weather_service.dart';
 import '../services/demo_post_service.dart';
 import '../services/ai_product_service.dart';
+import '../services/weather_service_dio.dart';
 
 enum _ViewStatus { idle, loading, success, error }
 
@@ -84,6 +85,24 @@ class _WeatherSearchPageState extends State<WeatherSearchPage> {
                 }
               },
               child: const Text('ทดสอบ Fake Store API (ขั้นตอนที่ 4.3)'),
+            ),
+            const SizedBox(height: 12),
+            ElevatedButton(
+              onPressed: () async {
+                final city = _cityController.text.isEmpty ? 'Bangkok' : _cityController.text;
+                try {
+                  print('กำลังดึงข้อมูลสภาพอากาศของ $city ด้วย Dio...');
+                  final weather = await fetchWeatherWithDio(city);
+                  print('--- ผลลัพธ์จาก Dio ---');
+                  print('1. ชื่อเมือง: ${weather.cityName}');
+                  print('2. อุณหภูมิ: ${weather.temperature}°C');
+                  print('3. รู้สึกเหมือน: ${weather.feelsLike}°C');
+                  print('4. สภาพอากาศ: ${weather.description}');
+                } catch (e) {
+                  print('พบข้อผิดพลาด (Dio): $e');
+                }
+              },
+              child: const Text('ทดสอบ Dio (ขั้นตอนที่ 5.3)'),
             ),
             const SizedBox(height: 16),
             // ตัวอย่าง: สถานะกำลังโหลด 
