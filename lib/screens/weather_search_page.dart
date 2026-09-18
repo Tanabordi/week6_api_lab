@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../models/weather.dart';
 import '../services/weather_service.dart';
+import '../services/demo_post_service.dart';
 
 enum _ViewStatus { idle, loading, success, error }
 
@@ -56,6 +57,16 @@ class _WeatherSearchPageState extends State<WeatherSearchPage> {
             ElevatedButton(
               onPressed: _status == _ViewStatus.loading ? null : _search,
               child: const Text('ค้นหา'),
+            ),
+            const SizedBox(height: 12),
+            ElevatedButton(
+              onPressed: () => createDemoPost(),
+              child: const Text('ทดลอง POST (ขั้นตอนที่ 3.1)'),
+            ),
+            const SizedBox(height: 12),
+            ElevatedButton(
+              onPressed: () => updateDemoPost(),
+              child: const Text('ทดลอง PUT (ขั้นตอนที่ 3.2)'),
             ),
             const SizedBox(height: 16),
             // ตัวอย่าง: สถานะกำลังโหลด 
