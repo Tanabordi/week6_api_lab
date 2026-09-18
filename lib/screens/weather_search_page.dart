@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../models/weather.dart';
 import '../services/weather_service.dart';
 import '../services/demo_post_service.dart';
+import '../services/ai_product_service.dart';
 
 enum _ViewStatus { idle, loading, success, error }
 
@@ -67,6 +68,22 @@ class _WeatherSearchPageState extends State<WeatherSearchPage> {
             ElevatedButton(
               onPressed: () => updateDemoPost(),
               child: const Text('ทดลอง PUT (ขั้นตอนที่ 3.2)'),
+            ),
+            const SizedBox(height: 12),
+            ElevatedButton(
+              onPressed: () async {
+                try {
+                  print('กำลังดึงข้อมูลสินค้าทั้งหมดจาก Fake Store API...');
+                  final products = await fetchAiProducts();
+                  print('ดึงข้อมูลสำเร็จ จำนวน ${products.length} รายการ');
+                  for (var i = 0; i < 3 && i < products.length; i++) {
+                    print('สินค้าที่ ${i+1}: ${products[i].title} - \$${products[i].price}');
+                  }
+                } catch (e) {
+                  print('พบข้อผิดพลาด: $e');
+                }
+              },
+              child: const Text('ทดสอบ Fake Store API (ขั้นตอนที่ 4.3)'),
             ),
             const SizedBox(height: 16),
             // ตัวอย่าง: สถานะกำลังโหลด 
